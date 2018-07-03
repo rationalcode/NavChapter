@@ -23,6 +23,10 @@ public class Main extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     final static ChapterFrame chapterFrame = new ChapterFrame();
+    final static DefaultFragment defaultFragment = new DefaultFragment();
+    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+
+    static boolean chapterPress = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +43,7 @@ public class Main extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
     }
 
     @Override
@@ -77,21 +82,29 @@ public class Main extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
-        int id = item.getItemId();
 
-        if (id == R.id.nav_chapters) {
-            // Handle the camera action
+        int i = item.getItemId();
+        switch (i){
+            case R.id.nav_chapters:
 
-            FragmentTransaction transaction = getFragmentManager().beginTransaction();
-            transaction.add(chapterFrame,"frame_chapter_menu");
-            transaction.commit();
-            Toast.makeText(getApplicationContext(),"Press Chapters", LENGTH_SHORT).show();
+                if (!chapterPress) {
+                    transaction.replace(R.id.default_fragment, chapterFrame);
+                    transaction.addToBackStack("chapter_fragment");
+                    transaction.commit();
 
-        } else if (id == R.id.nav_notions) {
+                    Toast.makeText(getApplicationContext(), "Press Chapters", LENGTH_SHORT).show();
+                    chapterPress = true;
+                }
+                break;
 
-        } else if (id == R.id.nav_share) {
+            case R.id.nav_notions:
+                break;
 
+            case R.id.nav_share:
+                break;
         }
+
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
