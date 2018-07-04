@@ -25,10 +25,9 @@
         android:id="@+id/default_fragment"
         android:name="com.example.admin.navchapter.DefaultFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:layout_margin="10dp"
-        tools:layout="@layout/default_fragment" />
+        android:layout_margin="10dp" />
 
 
 </android.widget.LinearLayout>

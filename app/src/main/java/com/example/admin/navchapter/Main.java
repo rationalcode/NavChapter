@@ -5,6 +5,7 @@ import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -24,7 +25,9 @@ public class Main extends AppCompatActivity
 
     final static ChapterFrame chapterFrame = new ChapterFrame();
     final static DefaultFragment defaultFragment = new DefaultFragment();
-    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+    static FragmentTransaction transaction;
+    static int currentFragmentId;
+    static final String TAG ="PRESS";
 
     static boolean chapterPress = false;
 
@@ -44,16 +47,21 @@ public class Main extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        transaction = getFragmentManager().beginTransaction();
+        currentFragmentId = R.id.default_fragment;
+
     }
 
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        currentFragmentId = R.id.default_fragment;
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
         }
+        Log.d(TAG, ""+currentFragmentId);
     }
 
     @Override
@@ -84,17 +92,29 @@ public class Main extends AppCompatActivity
         // Handle navigation view item clicks here.
 
         int i = item.getItemId();
+
+        Log.d(TAG, "chapters " +currentFragmentId);
+
         switch (i){
             case R.id.nav_chapters:
 
-                if (!chapterPress) {
-                    transaction.replace(R.id.default_fragment, chapterFrame);
+                if(currentFragmentId!=R.id.imageView2) {
+
+                    Log.d(TAG, "chapters " +currentFragmentId + " - "+R.id.imageView2);
+
+                    transaction.replace(currentFragmentId, chapterFrame);
+
+
                     transaction.addToBackStack("chapter_fragment");
+
+
                     transaction.commit();
 
-                    Toast.makeText(getApplicationContext(), "Press Chapters", LENGTH_SHORT).show();
-                    chapterPress = true;
+
+                    currentFragmentId = R.id.imageView2;
+                    Log.d(TAG, "chapters " +currentFragmentId + " - "+R.id.imageView2);
                 }
+
                 break;
 
             case R.id.nav_notions:
