@@ -47,7 +47,7 @@ public class Main extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        transaction = getFragmentManager().beginTransaction();
+        //transaction = getFragmentManager().beginTransaction();
         currentFragmentId = R.id.default_fragment;
 
     }
@@ -100,11 +100,10 @@ public class Main extends AppCompatActivity
 
                 if(currentFragmentId!=R.id.imageView2) {
 
-                    Log.d(TAG, "chapters " +currentFragmentId + " - "+R.id.imageView2);
+                    Log.d(TAG, "chapters " + currentFragmentId + " - " + R.id.imageView2);
 
+                    transaction = getFragmentManager().beginTransaction();
                     transaction.replace(currentFragmentId, chapterFrame);
-
-
                     transaction.addToBackStack("chapter_fragment");
 
 
@@ -112,8 +111,9 @@ public class Main extends AppCompatActivity
 
 
                     currentFragmentId = R.id.imageView2;
-                    Log.d(TAG, "chapters " +currentFragmentId + " - "+R.id.imageView2);
-                }
+                    }
+
+
 
                 break;
 
@@ -125,9 +125,10 @@ public class Main extends AppCompatActivity
         }
 
 
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
+
+
         return true;
     }
 }
