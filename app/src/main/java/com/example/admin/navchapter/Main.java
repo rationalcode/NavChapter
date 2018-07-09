@@ -98,9 +98,9 @@ public class Main extends AppCompatActivity
         switch (i){
             case R.id.nav_chapters:
 
-                if(currentFragmentId!=R.id.imageView2) {
+                if(currentFragmentId!=R.id.rv) {
 
-                    Log.d(TAG, "chapters " + currentFragmentId + " - " + R.id.imageView2);
+                    Log.d(TAG, "chapters " + currentFragmentId + " - " + R.id.rv);
 
                     transaction = getFragmentManager().beginTransaction();
                     transaction.replace(currentFragmentId, chapterFrame);
@@ -110,7 +110,7 @@ public class Main extends AppCompatActivity
                     transaction.commit();
 
 
-                    currentFragmentId = R.id.imageView2;
+                    currentFragmentId = R.id.rv;
                     }
 
 
