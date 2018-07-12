@@ -1,24 +1,19 @@
 package com.example.admin.navchapter;
 
-import android.app.Fragment;
-import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 
 import com.example.admin.navchapter.model.Chapter;
+import com.example.admin.navchapter.model.abstractFragment;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class ChapterFrame extends Fragment {
+public class ChapterFrame extends abstractFragment {
 
     @Nullable
     @Override
@@ -31,7 +26,10 @@ public class ChapterFrame extends Fragment {
         ArrayList<Chapter> chapters = new ArrayList<>();
         for (int i = 0; i < 30; i++) {
 
-            chapters.add(new Chapter(i+1," Chapter "+(i+1),"fdhsfdfshahfdhfhdagsfdgha"));
+            chapters.add(new Chapter(i+1," Chapter "+(i+1),"По умолчанию, текст в TextView нельзя выделить для копирования. Но в API 11 появилась такая возможность, которая может пригодиться. Делается либо при помощи XML-атрибута android:textIsSelectable, либо через метод setTextIsSelectable().\n" +
+                    "\n" +
+                    "Добавьте в разметку два компонента TextView и одно текстовое поле EditText для вставки скопированного текста. У первой текстовой метки установим возможность выделения текста декларативно.\n" +
+                    "\n"));
 
         }
 

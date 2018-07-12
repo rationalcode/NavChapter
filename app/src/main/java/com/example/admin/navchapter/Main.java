@@ -1,12 +1,10 @@
 package com.example.admin.navchapter;
 
-import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -15,21 +13,24 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
+import android.widget.TextView;
 
-import static android.widget.Toast.LENGTH_SHORT;
+import com.example.admin.navchapter.model.ChapterTextFragment;
+import com.example.admin.navchapter.model.abstractFragment;
 
 
 public class Main extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    final static ChapterFrame chapterFrame = new ChapterFrame();
+    final static ChapterTextFragment chapterTextFragment = new ChapterTextFragment ();
+    final static ChapterFrame  chapterFrame = new ChapterFrame();
     final static DefaultFragment defaultFragment = new DefaultFragment();
-    static FragmentTransaction transaction;
-    static int currentFragmentId;
+    public static android.support.v4.app.FragmentTransaction transaction;
+    public static android.support.v4.app.FragmentManager fragmentManager;
+    public static int currentFragmentId;
     static final String TAG ="PRESS";
+    public static TextView chapterText;
 
-    static boolean chapterPress = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +51,8 @@ public class Main extends AppCompatActivity
         //transaction = getFragmentManager().beginTransaction();
         currentFragmentId = R.id.default_fragment;
 
+
+        chapterText = findViewById(R.id.chapterText);
     }
 
     @Override
@@ -100,14 +103,11 @@ public class Main extends AppCompatActivity
 
                 if(currentFragmentId!=R.id.rv) {
 
-                    Log.d(TAG, "chapters " + currentFragmentId + " - " + R.id.rv);
-
-                    transaction = getFragmentManager().beginTransaction();
-                    transaction.replace(currentFragmentId, chapterFrame);
-                    transaction.addToBackStack("chapter_fragment");
-
-
-                    transaction.commit();
+                    replaceFragment(chapterFrame, getSupportFragmentManager());
+//                    transaction = getFragmentManager().beginTransaction();
+//                    transaction.replace(currentFragmentId, chapterFrame);
+//                    transaction.addToBackStack("chapter_fragment");
+//                    transaction.commit();
 
 
                     currentFragmentId = R.id.rv;
@@ -124,11 +124,18 @@ public class Main extends AppCompatActivity
                 break;
         }
 
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
 
-
         return true;
     }
+
+    public static <T extends abstractFragment<Fragment>> void replaceFragment (abstractFragment <Fragment> newFragment, android.support.v4.app.FragmentManager fragmentManager){
+
+        transaction = fragmentManager.beginTransaction();
+        transaction.replace(currentFragmentId,  newFragment);
+        transaction.addToBackStack("chapter_fragment");
+        transaction.commit();
+    }
+
 }
